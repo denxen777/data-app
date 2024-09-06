@@ -28,4 +28,5 @@ export const updateDataFulfilled = (
 
 export const updateDataRejected = (state: DataState) => {
   state.isLoading = false;
+  state.error_text = 'Что-то пошло не так, попробуйте перезагрузить страницу';
 };

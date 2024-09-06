@@ -1,6 +1,6 @@
-import { DataState } from '../types.ts';
 import { PayloadAction } from '@reduxjs/toolkit';
 import { IData, ResponseData } from '../../../api/types.ts';
+import { DataState } from '../types.ts';
 
 export const addedDataPending = (state: DataState) => {
   state.isLoading = true;
@@ -8,7 +8,7 @@ export const addedDataPending = (state: DataState) => {
 
 export const addedDataFulfilled = (
   state: DataState,
-  action: PayloadAction<ResponseData<IData>>,
+  action: PayloadAction<ResponseData<IData>>
 ) => {
   const { data, error_text, error_code } = action.payload;
 
@@ -26,4 +26,5 @@ export const addedDataFulfilled = (
 
 export const addedDataRejected = (state: DataState) => {
   state.isLoading = false;
+  state.error_text = 'Что-то пошло не так, попробуйте перезагрузить страницу';
 };

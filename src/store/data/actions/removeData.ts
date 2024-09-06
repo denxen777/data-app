@@ -26,4 +26,5 @@ export const removeDataFulfilled = (
 
 export const removeDataRejected = (state: DataState) => {
   state.isLoading = false;
+  state.error_text = 'Что-то пошло не так, попробуйте перезагрузить страницу';
 };

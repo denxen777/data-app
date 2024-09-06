@@ -8,7 +8,7 @@ export const getAllDataPending = (state: DataState) => {
 
 export const getAllDataFulfilled = (
   state: DataState,
-  action: PayloadAction<ResponseData<IData[]>>,
+  action: PayloadAction<ResponseData<IData[]>>
 ) => {
   const { data, error_code, error_text } = action.payload;
 
@@ -26,4 +26,5 @@ export const getAllDataFulfilled = (
 
 export const getAllDataRejected = (state: DataState) => {
   state.isLoading = false;
+  state.error_text = 'Что-то пошло не так, попробуйте перезагрузить страницу';
 };
