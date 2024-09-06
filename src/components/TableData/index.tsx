@@ -9,15 +9,16 @@ import { FC } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { IData } from '../../api/types.ts';
 import { useAppDispatch } from '../../hooks/useAppDispatch.ts';
+import { useAppSelector } from '../../hooks/useAppSelector.ts';
 import { useModal } from '../../hooks/useModal.ts';
 import { reqRemoveData, reqUpdateData } from '../../store/data/asyncAction.ts';
 import { addCurrentData } from '../../store/data/dataSlice.ts';
-import { ItemForm } from '../ItemForm';
-import { Modal } from '../Modal';
-import { TableDataProps } from './types.ts';
-import { TableColumnTitles } from '../TableColumnTitles';
 import { DataTableBody } from '../DataTableBody';
-import { useAppSelector } from '../../hooks/useAppSelector.ts';
+import { ItemForm } from '../ItemForm';
+import { MessageInfo } from '../MessageInfo/index.tsx';
+import { Modal } from '../Modal';
+import { TableColumnTitles } from '../TableColumnTitles';
+import { TableDataProps } from './types.ts';
 
 export const TableData: FC<TableDataProps> = (props) => {
   const dispatch = useAppDispatch();
@@ -42,20 +43,25 @@ export const TableData: FC<TableDataProps> = (props) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }}>
-          <TableHead>
-            <TableColumnTitles />
-          </TableHead>
-          <TableBody>
-            <DataTableBody
-              data={props.data}
-              handleEditBtn={handleEditBtn}
-              handleDeleteBtn={handleDeleteBtn}
-            />
-          </TableBody>
-        </Table>
-      </TableContainer>
+      {!props.data.length && (
+        <MessageInfo>Данные отсутствуют, добавьте запись!</MessageInfo>
+      )}
+      {!!props.data.length && (
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableColumnTitles />
+            </TableHead>
+            <TableBody>
+              <DataTableBody
+                data={props.data}
+                handleEditBtn={handleEditBtn}
+                handleDeleteBtn={handleDeleteBtn}
+              />
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
 
       {currentData && (
         <Modal open={open} onClose={handleClose}>
