@@ -38,7 +38,7 @@ export const Data = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && <Loader open={isLoading} />}
       {data && (
         <>
           <Box>

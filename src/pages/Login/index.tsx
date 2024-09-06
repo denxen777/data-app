@@ -7,10 +7,11 @@ import {
   Divider,
   Stack,
   TextField,
-  Typography,
 } from '@mui/material';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
+import { AlertError } from '../../components/AlertError/index.tsx';
+import { Loader } from '../../components/Loader/index.tsx';
 import { useAppDispatch } from '../../hooks/useAppDispatch.ts';
 import { useAppSelector } from '../../hooks/useAppSelector.ts';
 import { reqLogin } from '../../store/auth/asyncAction.ts';
@@ -25,7 +26,9 @@ export const Login = () => {
     handleSubmit,
   } = useForm<LoginForm>();
 
-  const { isAuth, error_text } = useAppSelector((state) => state.authSlice);
+  const { isAuth, isLoading, error_text } = useAppSelector(
+    (state) => state.authSlice
+  );
 
   const onSubmit: SubmitHandler<LoginForm> = (data) => {
     dispatch(reqLogin(data));
@@ -37,6 +40,7 @@ export const Login = () => {
 
   return (
     <>
+      {isLoading && <Loader open={isLoading} />}
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Card
           sx={{ width: 550 }}
@@ -68,11 +72,6 @@ export const Login = () => {
                 }
                 {...register('password', { required: true })}
               />
-              {error_text && (
-                <Box>
-                  <Typography color='error'>Нет доступа</Typography>
-                </Box>
-              )}
             </Stack>
 
             <Box sx={{ mt: 4 }}>
@@ -80,6 +79,11 @@ export const Login = () => {
                 Войти
               </Button>
             </Box>
+            {error_text && (
+              <Box sx={{ mt: 2 }}>
+                <AlertError>{error_text}</AlertError>
+              </Box>
+            )}
           </CardContent>
         </Card>
       </Box>
