@@ -1,7 +1,7 @@
-import { Backdrop, Box, Fade, Modal as ModalMui } from '@mui/material';
+import { Backdrop, Fade, Modal as ModalMui } from '@mui/material';
 import { FC } from 'react';
+import './style.css';
 import { ModalProps } from './types.ts';
-import { style } from '../../assets/data/style_modal.ts';
 
 export const Modal: FC<ModalProps> = ({ children, ...props }) => {
   return (
@@ -17,7 +17,7 @@ export const Modal: FC<ModalProps> = ({ children, ...props }) => {
       }}
     >
       <Fade in={props.open}>
-        <Box sx={style}>{children}</Box>
+        <div className='content'>{children}</div>
       </Fade>
     </ModalMui>
   );

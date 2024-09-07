@@ -1,30 +1,50 @@
-import { FC } from 'react';
 import { AccountCircle } from '@mui/icons-material';
 import { IconButton, Menu, MenuItem, Typography } from '@mui/material';
-import { UserMenuProps } from './types.ts';
+import { useRef, useState } from 'react';
+import { useAppDispatch } from '../../hooks/useAppDispatch.ts';
+import { logout } from '../../store/auth/authSlice.ts';
 
-export const UserMenu: FC<UserMenuProps> = (props) => {
+export const UserMenu = () => {
+  const dispatch = useAppDispatch();
+
+  const iconRef = useRef<null | HTMLButtonElement>(null);
+
+  const [open, setOpen] = useState(false);
+
+  const handleLogout = () => {
+    handleClose();
+    dispatch(logout());
+  };
+
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <div>
-      <IconButton color='inherit' onClick={props.handleMenu}>
+      <IconButton color='inherit' onClick={handleOpen} ref={iconRef}>
         <AccountCircle fontSize='large' />
       </IconButton>
       <Menu
-        anchorEl={props.anchorEl}
+        anchorEl={iconRef.current}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',
         }}
-        keepMounted
         transformOrigin={{
           vertical: 'top',
           horizontal: 'right',
         }}
-        open={Boolean(props.anchorEl)}
-        onClose={props.handleClose}
+        keepMounted
+        open={open}
+        onClose={handleClose}
       >
-        <MenuItem onClick={props.handleClose}>
-          <Typography onClick={props.handleLogoutClick}>Выйти</Typography>
+        <MenuItem onClick={handleLogout}>
+          <Typography>Выйти</Typography>
         </MenuItem>
       </Menu>
     </div>

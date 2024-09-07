@@ -1,6 +1,6 @@
 import { AppBar, Box, Toolbar, Typography } from '@mui/material';
 import { useAppSelector } from '../../hooks/useAppSelector.ts';
-import { UserMenuContainer } from '../UserMenu/UserMenuContainer';
+import { UserMenu } from '../UserMenu/';
 
 export const Header = () => {
   const { isAuth } = useAppSelector((state) => state.authSlice);
@@ -17,7 +17,7 @@ export const Header = () => {
             >
               Данные
             </Typography>
-            {isAuth && <UserMenuContainer />}
+            {isAuth && <UserMenu />}
           </Toolbar>
         </AppBar>
       </Box>

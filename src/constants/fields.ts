@@ -1,4 +1,4 @@
-export const columns = [
+export const fields = [
   'documentStatus',
   'employeeNumber',
   'documentType',

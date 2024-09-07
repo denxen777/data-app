@@ -1,11 +1,11 @@
 import { TableCell, TableRow } from '@mui/material';
-import { columns } from '../../assets/data/columns.ts';
+import { fields } from '../../constants/fields';
 
 export const TableColumnTitles = () => {
   return (
     <TableRow>
       <TableCell align='right'>Actions</TableCell>
-      {columns.map((title, idx) => (
+      {fields.map((title, idx) => (
         <TableCell key={idx} align='right'>
           {title}
         </TableCell>

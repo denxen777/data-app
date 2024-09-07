@@ -11,10 +11,10 @@ import {
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IData } from '../../api/types.ts';
-import { columns } from '../../assets/data/columns.ts';
+import { fields } from '../../constants/fields.ts';
+import { dataWithISODates } from '../../utils/dataWithISODates.ts';
 import { parseDateISO } from '../../utils/parseDateISO.ts';
 import { ItemFormProps } from './types.ts';
-import { dataWithISODates } from '../../utils/dataWithISODates.ts';
 
 export const ItemForm: FC<ItemFormProps> = (props) => {
   const {
@@ -49,7 +49,7 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
       <Divider />
       <CardContent>
         <Stack spacing={2}>
-          {columns.map((title, idx) => (
+          {fields.map((title, idx) => (
             <TextField
               key={idx}
               label={
