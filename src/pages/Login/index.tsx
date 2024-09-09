@@ -56,21 +56,31 @@ export const Login = () => {
                 label='Логин'
                 type='text'
                 size='small'
-                error={Boolean(errors.username)}
-                helperText={
-                  Boolean(errors.username) && 'Поле обязательно для заполнения'
-                }
-                {...register('username', { required: true })}
+                error={Boolean(errors.username?.message)}
+                helperText={errors.username?.message}
+                {...register('username', {
+                  required: {
+                    value: true,
+                    message: 'Поле обязательно для заполнения',
+                  },
+                  validate: (val) =>
+                    /[А-Я,а-я]+/.test(val)
+                      ? 'Логин должен содержать латиницу'
+                      : undefined,
+                })}
               />
               <TextField
                 label='Пароль'
                 type='password'
                 size='small'
-                error={Boolean(errors.password)}
-                helperText={
-                  Boolean(errors.password) && 'Поле обязательно для заполнения'
-                }
-                {...register('password', { required: true })}
+                error={Boolean(errors.password?.message)}
+                helperText={errors.password?.message}
+                {...register('password', {
+                  required: {
+                    value: true,
+                    message: 'Поле обязательно для заполнения',
+                  },
+                })}
               />
             </Stack>
 
