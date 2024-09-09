@@ -11,7 +11,6 @@ import {
 import { FC } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { IData } from '../../api/types.ts';
-import { fields } from '../../constants/fields.ts';
 import { dataWithISODates } from '../../utils/dataWithISODates.ts';
 import { parseDateISO } from '../../utils/parseDateISO.ts';
 import { ItemFormProps } from './types.ts';
@@ -33,11 +32,11 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
     props.onSubmit(dataWithId);
   };
 
-  const setValue = (title: keyof IData) => {
+  const setValue = (field: keyof IData) => {
     let value = '';
 
     if (props.mode === 'update') {
-      value = parseDateISO(title, props.currentData[title]);
+      value = parseDateISO(field, props.currentData[field]);
     }
 
     return value;
@@ -49,26 +48,82 @@ export const ItemForm: FC<ItemFormProps> = (props) => {
       <Divider />
       <CardContent>
         <Stack spacing={2}>
-          {fields.map((title, idx) => (
-            <TextField
-              key={idx}
-              label={
-                title === 'employeeSigDate' || title === 'companySigDate'
-                  ? title + ' DD.MM.YY'
-                  : title
-              }
-              size='small'
-              error={Boolean(errors[title as keyof IData])}
-              helperText={
-                Boolean(errors[title as keyof IData]) &&
-                'Поле обязательно для заполнения'
-              }
-              {...register(title as keyof IData, {
-                required: true,
-                value: setValue(title as keyof IData),
-              })}
-            />
-          ))}
+          <TextField
+            size='small'
+            label='documentStatus'
+            {...register('documentStatus', {
+              required: true,
+              value: setValue('documentStatus' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='employeeNumber'
+            {...register('employeeNumber', {
+              required: true,
+              value: setValue('employeeNumber' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='documentType'
+            {...register('documentType', {
+              required: true,
+              value: setValue('documentType' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='documentName'
+            {...register('documentName', {
+              required: true,
+              value: setValue('documentName' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='companySignatureName'
+            {...register('companySignatureName', {
+              required: true,
+              value: setValue('companySignatureName' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='employeeSignatureName'
+            {...register('employeeSignatureName', {
+              required: true,
+              value: setValue('employeeSignatureName' as keyof IData),
+            })}
+          />
+          <TextField
+            size='small'
+            label='employeeSigDate'
+            type='date'
+            slotProps={{ inputLabel: { shrink: true } }}
+            helperText={errors.employeeSigDate?.message}
+            error={Boolean(errors.employeeSigDate?.message)}
+            {...register('employeeSigDate', {
+              required: true,
+              value: setValue('employeeSigDate' as keyof IData),
+              validate: (val) =>
+                val.split('-')[0].length > 4 ? 'Некорректная дата' : undefined,
+            })}
+          />
+          <TextField
+            size='small'
+            label='companySigDate'
+            type='date'
+            slotProps={{ inputLabel: { shrink: true } }}
+            helperText={errors.companySigDate?.message}
+            error={Boolean(errors.companySigDate?.message)}
+            {...register('companySigDate', {
+              required: true,
+              value: setValue('companySigDate' as keyof IData),
+              validate: (val) =>
+                val.split('-')[0].length > 4 ? 'Некорректная дата' : undefined,
+            })}
+          />
         </Stack>
         <Box sx={{ mt: 4 }}>
           <Button
